@@ -26,6 +26,7 @@ jobs:
 
     - name: Run test suite
       run: |
+        chmod +x tests/test_container.sh
         ./Tests/test_container.sh
 
     - name: Stop container
