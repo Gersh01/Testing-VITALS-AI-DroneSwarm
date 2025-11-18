@@ -18,11 +18,11 @@ jobs:
 
     - name: Build Docker image
       run: |
-        app/docker build -t vitals-image .
+        docker build -t vitals-image app/.
 
     - name: Run container in background
       run: |
-        app/docker run -d -p 8080:8080 --name vitals-container vitals-image
+        docker run -d -p 8080:8080 --name vitals-container vitals-image
 
     - name: Run test suite
       run: |
