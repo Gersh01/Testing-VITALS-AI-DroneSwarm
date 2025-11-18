@@ -1,4 +1,4 @@
-name: CI - Docker Compose Build & Test
+name: CI - Docker Build & Test
 
 on:
   push:
@@ -6,29 +6,32 @@ on:
   pull_request:
 
 jobs:
-  compose-test:
-    runs-on: ubuntu-latest
+  test-docker:
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Check out repository
       uses: actions/checkout@v4
 
-    - name: Install Docker Compose (v2 is built into Docker)
-      run: Docker/docker compose version
+    - name: Set up Docker Buildx (optional)
+      uses: docker/setup-buildx-action@v3
 
-    - name: Build services
-      run: Docker/docker compose build
+    - name: Build Docker image
+      run: |
+        docker build -t vitals-image .
 
-    - name: Start services in background
-      run: Docker/docker compose up -d
+    - name: Run container in background
+      run: |
+        docker run -d -p 8080:8080 --name vitals-container vitals-image
 
     - name: Run test suite
-      run: ./tests/test_container.sh
+      run: |
+        ./Tests/test_container.sh
 
-    - name: Show logs (optional, useful when tests fail)
-      if: failure()
-      run: docker compose logs
-
-    - name: Shut down services
+    - name: Stop container
       if: always()
-      run: docker compose down
+      run: docker stop myapp-container
+
+    - name: Remove container
+      if: always()
+      run: docker rm myapp-container
