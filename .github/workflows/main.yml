@@ -31,8 +31,8 @@ jobs:
 
     - name: Stop container
       if: always()
-      run: docker stop myapp-container
+      run: docker stop vitals-container
 
     - name: Remove container
       if: always()
-      run: docker rm myapp-container
+      run: docker rm vitals-container
