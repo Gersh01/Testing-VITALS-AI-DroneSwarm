@@ -1,0 +1,51 @@
+version: '3.8'
+
+networks:
+  vitals-network:
+    driver: bridge
+services:
+  agent-a:
+    build: 
+      context: ./Agent-A
+      dockerfile: Dockerfile
+    networks:
+      - vitals-network
+  agent-b:
+    build: 
+      context: ./Agent-B
+      dockerfile: Dockerfile
+    networks:
+      - vitals-network
+    depends_on:
+      - agent-a
+  agent-c:
+    build: 
+      context: ./Agent-C
+      dockerfile: Dockerfile
+    networks:
+      - vitals-network
+    depends_on:
+      - agent-b
+  agent-d:
+    build: 
+      context: ./Agent-D
+      dockerfile: Dockerfile 
+    networks:
+      - vitals-network
+    depends_on:
+      - agent-c
+
+  database:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: vitals_user
+      POSTGRES_PASSWORD: vitals_password
+    ports:
+      - "5432:5432"
+    networks:
+      - vitals-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

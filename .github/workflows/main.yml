@@ -1,4 +1,4 @@
-name: CI - Docker Build & Test
+name: CI - Docker Compose Build & Test
 
 on:
   push:
@@ -6,32 +6,38 @@ on:
   pull_request:
 
 jobs:
-  test-docker:
+  test-docker-compose:
     runs-on: ubuntu-latest
 
     steps:
     - name: Check out repository
       uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx (optional)
+    - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Build Docker image
+    - name: Docker Compose build
+      working-directory: app
       run: |
-        docker build -t myapp:ci .
+        docker compose -f Docker-compose.yml build --pull
 
-    - name: Run container in background
+    - name: Docker Compose smoke test
+      working-directory: app
       run: |
-        docker run -d -p 8080:8080 --name myapp-container myapp:ci
+        docker compose -f Docker-compose.yml up --abort-on-container-exit --exit-code-from agent-d
 
-    - name: Run test suite
-      run: |
-        ./tests/test_container.sh
-
-    - name: Stop container
+    - name: Verify expected logs
       if: always()
-      run: docker stop myapp-container
+      working-directory: app
+      run: |
+        docker compose -f Docker-compose.yml logs --no-color
+        docker compose -f Docker-compose.yml logs --no-color | grep -q "Agent A is running!"
+        docker compose -f Docker-compose.yml logs --no-color | grep -q "Agent B is running!"
+        docker compose -f Docker-compose.yml logs --no-color | grep -q "Agent C is running!"
+        docker compose -f Docker-compose.yml logs --no-color | grep -q "Agent D is running!"
 
-    - name: Remove container
+    - name: Docker Compose down
       if: always()
-      run: docker rm myapp-container
+      working-directory: app
+      run: |
+        docker compose -f Docker-compose.yml down -v
