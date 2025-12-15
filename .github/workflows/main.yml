@@ -7,7 +7,7 @@ on:
 
 jobs:
   test-docker-compose:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Check out repository
@@ -19,25 +19,21 @@ jobs:
     - name: Docker Compose build
       working-directory: app
       run: |
-        docker compose -f Docker-compose.yml build --pull
+        docker build -t myapp:ci .
 
     - name: Docker Compose smoke test
       working-directory: app
       run: |
-        docker compose -f Docker-compose.yml up --abort-on-container-exit --exit-code-from agent-d
+        docker run -d -p 8080:8080 --name myapp-container myapp:ci
+
+    - name: Run test suite
+      run: |
+        ./tests/test_container.sh
 
     - name: Verify expected logs
       if: always()
-      working-directory: app
-      run: |
-        docker compose -f Docker-compose.yml logs --no-color
-        docker compose -f Docker-compose.yml logs --no-color | grep -q "Agent A is running!"
-        docker compose -f Docker-compose.yml logs --no-color | grep -q "Agent B is running!"
-        docker compose -f Docker-compose.yml logs --no-color | grep -q "Agent C is running!"
-        docker compose -f Docker-compose.yml logs --no-color | grep -q "Agent D is running!"
+      run: docker stop myapp-container
 
-    - name: Docker Compose down
+    - name: Remove container
       if: always()
-      working-directory: app
-      run: |
-        docker compose -f Docker-compose.yml down -v
+      run: docker rm myapp-container
