@@ -4,7 +4,8 @@
 
 set -e
 
-COMPOSE_FILE="app/Docker-compose.yml"
+WORKING_DIR="app/"
+COMPOSE_FILE="$WORKING_DIR/Docker-compose.yml"
 PROJECT_NAME="testing-vitals-ai-droneswarm"
 
 echo "Testing Docker Compose setup..."
@@ -23,6 +24,7 @@ fi
 
 # Start services
 echo "Starting Docker Compose services..."
+cd "$WORKING_DIR"
 docker-compose up -d
 
 # Wait for services to start
