@@ -25,7 +25,7 @@ fi
 # Start services
 echo "Starting Docker Compose services..."
 cd "$WORKING_DIR"
-docker-compose up -d
+docker compose up -d
 
 # Wait for services to start
 sleep 10
