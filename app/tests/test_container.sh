@@ -4,7 +4,7 @@
 
 set -e
 
-COMPOSE_FILE="docker-compose.yml"
+COMPOSE_FILE="Docker-compose.yml"
 PROJECT_NAME="testing-vitals-ai-droneswarm"
 
 echo "Testing Docker Compose setup..."
