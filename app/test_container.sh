@@ -24,6 +24,7 @@ fi
 
 # Start services
 echo "Starting Docker Compose services..."
+echo "Current working directory: $(pwd)"
 cd "$WORKING_DIR"
 docker compose up -d
 
