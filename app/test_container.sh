@@ -4,8 +4,7 @@
 
 set -e
 
-WORKING_DIR="app/"
-COMPOSE_FILE="$WORKING_DIR/Docker-compose.yml"
+COMPOSE_FILE="Docker-compose.yml"
 PROJECT_NAME="testing-vitals-ai-droneswarm"
 
 echo "Testing Docker Compose setup..."
