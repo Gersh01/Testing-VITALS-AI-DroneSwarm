@@ -43,9 +43,9 @@ jobs:
 
     - name: Run test suite
       run: |
-        if [ -f ./app/test_container.sh ]; then
-          chmod +x ./app/test_container.sh
-          ./app/test_container.sh
+        if [ -f ./test_container.sh ]; then
+          chmod +x ./test_container.sh
+          ./test_container.sh
         else
           echo "No test script found, skipping tests"
         fi
