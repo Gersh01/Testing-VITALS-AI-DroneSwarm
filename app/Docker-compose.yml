@@ -1,5 +1,3 @@
-version: '3.8'
-
 networks:
   vitals-network:
     driver: bridge
@@ -16,9 +14,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
   vitals-gcs:
-    build: 
-      context: .
-      dockerfile: Dockerfile
+    image: vitals-gcs:latest
     ports:
       - "8000:8000"
     networks:
@@ -26,33 +22,25 @@ services:
     depends_on:
       - database
   agent-a:
-    build: 
-      context: ./Agent-A
-      dockerfile: Dockerfile
+    image: agent-a
     networks:
       - vitals-network
     depends_on:
       - vitals-gcs
   agent-b:
-    build: 
-      context: ./Agent-B
-      dockerfile: Dockerfile
+    image: agent-b
     networks:
       - vitals-network
     depends_on:
       - agent-a
   agent-c:
-    build: 
-      context: ./Agent-C
-      dockerfile: Dockerfile
+    image: agent-c
     networks:
       - vitals-network
     depends_on:
       - agent-b
   agent-d:
-    build: 
-      context: ./Agent-D
-      dockerfile: Dockerfile 
+    image: agent-d 
     networks:
       - vitals-network
     depends_on:
