@@ -14,7 +14,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
   vitals-gcs:
-    image: vitals-gcs:latest
+    image: gersh01/vitals-gcs:latest
     ports:
       - "8000:8000"
     networks:
@@ -22,13 +22,13 @@ services:
     depends_on:
       - database
   agent-a:
-    image: agent-a
+    image: gersh01/agent-a
     networks:
       - vitals-network
     depends_on:
       - vitals-gcs
   agent-b:
-    image: agent-b
+    image: gersh01/agent-b
     networks:
       - vitals-network
     depends_on:
@@ -40,7 +40,7 @@ services:
     depends_on:
       - agent-b
   agent-d:
-    image: agent-d 
+    image: gersh01/agent-d 
     networks:
       - vitals-network
     depends_on:
