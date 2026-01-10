@@ -70,4 +70,4 @@ RUN ARCH=$(dpkg --print-architecture) && \
 COPY . .
 
 # Print all dependencies when container runs
-CMD ["python missionState.py"]
+CMD ["python", "missionState.py"]
