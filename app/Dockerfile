@@ -70,4 +70,4 @@ RUN ARCH=$(dpkg --print-architecture) && \
 COPY . .
 
 # Print all dependencies when container runs
-CMD ["sh", "-c", "echo '\n========================================'; echo 'Python Dependencies:'; echo '========================================'; pip list; echo '\n========================================'; echo 'System Packages:'; echo '========================================'; dpkg -l | grep '^ii' | awk '{print $2, $3}'; echo '\n========================================'; echo 'Application Ready'; echo '========================================'; exec bash"]
+CMD ["python missionState.py"]
