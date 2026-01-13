@@ -1,12 +1,12 @@
-Running QGroundControl with Gazebo (PX4 SITL)
+# Running QGroundControl with Gazebo (PX4 SITL)
 
-Prerequisites (Linux/WSL2 Ubuntu recommended)
+## Prerequisites (Linux/WSL2 Ubuntu recommended)
 - QGroundControl AppImage downloaded (https://qgroundcontrol.com/)
 - PX4-Autopilot cloned and dependencies installed
 - Gazebo (Garden/Harmonic) installed
 - libfuse2 for AppImage
 
-Setup (run in a terminal)
+## Setup (run in a terminal)
 - AppImage permission:
     chmod +x ./QGroundControl-x86_64.AppImage
     sudo apt-get update && sudo apt-get install -y libfuse2
@@ -17,13 +17,18 @@ Setup (run in a terminal)
     # Close and reopen terminal or:
     source ~/.bashrc
 
-Start QGroundControl (keep it running)
+## Start QGroundControl (keep it running)
 1) ./QGroundControl-x86_64.AppImage
 
-Start Gazebo with PX4 SITL (from PX4-Autopilot repo root)
+## Start Gazebo with PX4 SITL (from PX4-Autopilot repo root)
 2) make px4_sitl gz_x500
      # Optional headless mode:
      # HEADLESS=1 make px4_sitl gz_x500
+
+## Start VITALS using Docker compose
+1) git pull
+2) docker compose pull
+3) docker compose up
 
 Connection notes
 - QGroundControl usually auto-connects on UDP 14550.
