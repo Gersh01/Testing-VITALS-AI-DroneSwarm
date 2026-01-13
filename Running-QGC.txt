@@ -26,9 +26,10 @@
      # HEADLESS=1 make px4_sitl gz_x500
 
 ## Start VITALS using Docker compose
-1) git pull
-2) docker compose pull
-3) docker compose up
+1) cd /path/to/VITALS/app
+2) git pull
+3) docker compose pull
+4) docker compose up
 
 Connection notes
 - QGroundControl usually auto-connects on UDP 14550.

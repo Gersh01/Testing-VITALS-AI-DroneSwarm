@@ -11,3 +11,4 @@ ultralytics
 numpy
 rtree
 psycopg2
+pillow

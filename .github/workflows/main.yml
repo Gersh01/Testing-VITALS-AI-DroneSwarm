@@ -7,7 +7,7 @@ on:
 
 jobs:
   test-docker-compose:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Check out repository
@@ -24,12 +24,12 @@ jobs:
     - name: Build Docker Compose services
       working-directory: ./app
       run: |
-        docker compose -f Docker-compose.yml build
+        docker compose -f docker-compose.yml build
 
     - name: Start Docker Compose services
       working-directory: ./app
       run: |
-        docker compose -f Docker-compose.yml up -d
+        docker compose -f docker-compose.yml up -d
 
     - name: Wait for services to be ready
       run: |
@@ -39,7 +39,7 @@ jobs:
     - name: Check running containers
       working-directory: ./app
       run: |
-        docker compose -f Docker-compose.yml ps
+        docker compose -f docker-compose.yml ps
 
     - name: Run test suite
       run: |
@@ -54,10 +54,10 @@ jobs:
       if: failure()
       working-directory: ./app
       run: |
-        docker compose -f Docker-compose.yml logs
+        docker compose -f docker-compose.yml logs
 
     - name: Stop and remove Docker Compose services
       if: always()
       working-directory: ./app
       run: |
-        docker compose -f Docker-compose.yml down -v
+        docker compose -f docker-compose.yml down -v
