@@ -62,12 +62,11 @@ RUN ARCH=$(dpkg --print-architecture) && \
         pip install --no-cache-dir --timeout=1000 --retries=5 -r requirements.txt; \
     fi && \
     echo "\n========================================" && \
-    echo "Installed Python Packages:" && \
-    echo "========================================\n" && \
-    pip list
+    echo "Finished Building" && \
+    echo "========================================\n"
 
 # Copy the entire app directory
 COPY . .
 
 # Print all dependencies when container runs
-CMD ["python", "missionState.py"]
+CMD ["python3", "missionState.py"]
